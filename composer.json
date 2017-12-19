@@ -1,0 +1,16 @@
+{
+    "name": "jce2php",
+    "description": "jce2php工具",
+    "license":"MIT",
+    "version":"1.0.0",
+    "authors": [
+        {
+            "name": "Chen Liang",
+            "email": "liangchen@yuewen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": ">=5.3"
+    }
+}
