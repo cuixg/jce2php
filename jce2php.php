@@ -511,7 +511,7 @@ class StructParser {
                         $word = '';
                     }
                     else if($this->isEnum($word)) {
-                        $type = 'unsigned byte';
+                        $type = 'short';
                         $this->state = 'init';
                         $word = '';
                     }
@@ -524,7 +524,7 @@ class StructParser {
                     }
                     // 增加对namespace的支持
                     else if(in_array($word,$this->preNamespaceEnums)) {
-                        $type = 'unsigned byte';
+                        $type = 'short';
                         $this->state = 'init';
                         $word = '';
                     }
