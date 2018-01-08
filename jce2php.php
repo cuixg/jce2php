@@ -167,9 +167,9 @@ class Utils {
 
     public static function inIdentifier($char) {
         return ($char >= 'a' & $char <= 'z') |
-            ($char >= 'A' & $char <= 'Z')|
-            ($char >= '0' & $char <= '9') |
-            ($char == '_');
+        ($char >= 'A' & $char <= 'Z')|
+        ($char >= '0' & $char <= '9') |
+        ($char == '_');
     }
 
 
@@ -227,8 +227,8 @@ class StructParser {
 
 
     public function __construct($fp,$line,$uniqueName,$moduleName,
-        $structName,$preStructs,$preEnums,$namespaceName,
-        $preNamespaceEnums, $preNamespaceStructs)
+                                $structName,$preStructs,$preEnums,$namespaceName,
+                                $preNamespaceEnums, $preNamespaceStructs)
     {
         $this->fp = $fp;
         $this->uniqueName = $uniqueName;
@@ -399,9 +399,9 @@ class StructParser {
 
     public function inIdentifier($char) {
         return ($char >= 'a' & $char <= 'z') |
-            ($char >= 'A' & $char <= 'Z')|
-            ($char >= '0' & $char <= '9') |
-            ($char == '_');
+        ($char >= 'A' & $char <= 'Z')|
+        ($char >= '0' & $char <= '9') |
+        ($char == '_');
     }
 
     /**
@@ -615,6 +615,13 @@ class StructParser {
                 else $word .= $char;
             }
             else if($this->state == 'lineEnd') {
+                if($char == '}'){
+                    // 需要贪心的读到"\n"为止
+                    while(($lastChar=fgetc($this->fp)) != "\n") {
+                        continue;
+                    }
+                    $this->state = 'end';
+                }
                 break;
             }
             else if($this->state == 'end') {
@@ -871,7 +878,7 @@ class StructParser {
 
     public function getStructClassHeader($prefix="getFileHea") {
         return "<?php\n\nnamespace protocol\\".$this->namespaceName.$prefix.";".
-            $this->doubleReturn;
+        $this->doubleReturn;
     }
 }
 
@@ -926,8 +933,8 @@ class InterfaceParser {
 
 
     public function __construct($fp, $line, $namespaceName, $moduleName,
-        $interfaceName, $asInterfaceName, $nyInterfaceName, $preStructs,
-        $preEnums, $servantName, $preNamespaceEnums, $preNamespaceStructs)
+                                $interfaceName, $asInterfaceName, $nyInterfaceName, $preStructs,
+                                $preEnums, $servantName, $preNamespaceEnums, $preNamespaceStructs)
     {
         $this->fp = $fp;
         $this->firstLine = $line;
@@ -981,68 +988,68 @@ class InterfaceParser {
 
     public function getFileHeader($prefix="") {
         return "<?php\n\nnamespace protocol\\".$this->namespaceName.$prefix.";".
-            $this->doubleReturn;
+        $this->doubleReturn;
     }
 
     public function getInterfaceBasic() {
 
         return $this->tabSymbol."private \$_tafAssistant;".$this->returnSymbol.
-            $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
-            $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
-            $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
-            $this->tabSymbol."private \$_ip;".$this->returnSymbol.
-            $this->tabSymbol."private \$_port;".$this->doubleReturn.
-            $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
-            $this->doubleTab."\$this->_tafAssistant = new TafAssistantV2(\$callerName);".$this->returnSymbol.
-            $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
-            $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
-            $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn.
+        $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
+        $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
+        $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
+        $this->tabSymbol."private \$_ip;".$this->returnSymbol.
+        $this->tabSymbol."private \$_port;".$this->doubleReturn.
+        $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
+        $this->doubleTab."\$this->_tafAssistant = new TafAssistantV2(\$callerName);".$this->returnSymbol.
+        $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
+        $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
+        $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn.
 
-            $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
-            $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
-            $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn;
+        $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
+        $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
+        $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn;
     }
 
     public function getInterfaceBasicAs() {
         return  $this->tabSymbol."private \$_tafAssistant;".$this->returnSymbol.
-            $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
-            $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
-            $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
-            $this->tabSymbol."private \$_ip;".$this->returnSymbol.
-            $this->tabSymbol."private \$_port;".$this->doubleReturn.
-            $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
-            $this->doubleTab."\$this->_tafAssistant = new TafAssistantAsV2(\$callerName);".$this->returnSymbol.
-            $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
-            $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
-            $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn.
+        $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
+        $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
+        $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
+        $this->tabSymbol."private \$_ip;".$this->returnSymbol.
+        $this->tabSymbol."private \$_port;".$this->doubleReturn.
+        $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
+        $this->doubleTab."\$this->_tafAssistant = new TafAssistantAsV2(\$callerName);".$this->returnSymbol.
+        $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
+        $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
+        $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn.
 
-            $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
-            $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
-            $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn;
+        $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
+        $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
+        $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn;
     }
 
     public function getInterfaceBasicNy() {
         return  $this->tabSymbol."private \$_tafAssistant;".$this->returnSymbol.
-            $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
-            $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
-            $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
-            $this->tabSymbol."private \$_ip;".$this->returnSymbol.
-            $this->tabSymbol."private \$_port;".$this->doubleReturn.
-            $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
-            $this->doubleTab."\$this->_tafAssistant = new TafAssistantNyV2(\$callerName);".$this->returnSymbol.
-            $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
-            $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
-            $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn.
+        $this->tabSymbol."private \$_servantName = \"$this->servantName\";".$this->doubleReturn.
+        $this->tabSymbol."private \$_socketMode=2;".$this->returnSymbol.
+        $this->tabSymbol."private \$_iVersion=3;".$this->returnSymbol.
+        $this->tabSymbol."private \$_ip;".$this->returnSymbol.
+        $this->tabSymbol."private \$_port;".$this->doubleReturn.
+        $this->tabSymbol."public function __construct(\$ip=\"\",\$port=\"\",\$callerName=\"\",\$iVersion=3) {".$this->returnSymbol.
+        $this->doubleTab."\$this->_tafAssistant = new TafAssistantNyV2(\$callerName);".$this->returnSymbol.
+        $this->doubleTab."\$this->_ip = \$ip;".$this->returnSymbol.
+        $this->doubleTab."\$this->_port = \$port;".$this->returnSymbol.
+        $this->doubleTab."\$this->_iVersion = \$iVersion;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn.
 
-            $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
-            $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
-            $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
-            $this->tabSymbol."}".$this->doubleReturn;
+        $this->tabSymbol."public function set(\$key,\$value) {".$this->returnSymbol.
+        $this->doubleTab."if(property_exists(\$this,\$key))".$this->returnSymbol.
+        $this->tripleTab."\$this->\$key = \$value;".$this->returnSymbol.
+        $this->tabSymbol."}".$this->doubleReturn;
     }
 
     public function parse() {
@@ -1149,6 +1156,7 @@ class InterfaceParser {
      * @param $fp
      * @param $line
      * 这里必须要引入状态机了
+     * 这里并不一定要一个line呀,应该找)作为结束符
      */
     public function InterfaceFuncParseLine() {
         $line = '';
@@ -1214,6 +1222,13 @@ class InterfaceParser {
                 else $line .= $char;
             }
             else if($this->state == 'lineEnd') {
+                if($char == '}'){
+                    // 需要贪心的读到"\n"为止
+                    while(($lastChar=fgetc($this->fp)) != "\n") {
+                        continue;
+                    }
+                    $this->state = 'end';
+                }
                 break;
             }
             else if($this->state == 'end') {
@@ -2009,13 +2024,13 @@ class InterfaceParser {
             $this->doubleTab."try {".$this->returnSymbol;
 
 
-/* old logic
-       $bodyPrefix = $this->doubleTab."\$this->_tafAssistant->setRequest(\$this->_servantName,__FUNCTION__,\$this->_ip,\$this->_port);".$this->doubleReturn.
-//            $this->doubleTab."try {".$this->returnSymbol;
-//
-//        $bodyPrefixAs = $this->doubleTab.
-//            "(yield \$this->_tafAssistant->setRequest(\$this->_servantName,__FUNCTION__,\$this->_ip,\$this->_port));".$this->doubleReturn.
-//            $this->doubleTab."try {".$this->returnSymbol;*/
+        /* old logic
+               $bodyPrefix = $this->doubleTab."\$this->_tafAssistant->setRequest(\$this->_servantName,__FUNCTION__,\$this->_ip,\$this->_port);".$this->doubleReturn.
+        //            $this->doubleTab."try {".$this->returnSymbol;
+        //
+        //        $bodyPrefixAs = $this->doubleTab.
+        //            "(yield \$this->_tafAssistant->setRequest(\$this->_servantName,__FUNCTION__,\$this->_ip,\$this->_port));".$this->doubleReturn.
+        //            $this->doubleTab."try {".$this->returnSymbol;*/
 
         $bodySuffix = $this->doubleTab."catch (\\Exception \$e) {".$this->returnSymbol.
             $this->tripleTab."return array(".$this->returnSymbol.
@@ -2563,7 +2578,7 @@ class FileConverter
 class IncludeParser {
 
     public function includeScan($includeFile,&$preEnums,&$preStructs,
-        &$preNamespaceEnums,&$preNamespaceStructs)
+                                &$preNamespaceEnums,&$preNamespaceStructs)
     {
         $fp = fopen($includeFile, 'r');
         if (!$fp) {
@@ -2609,8 +2624,8 @@ class IncludeParser {
     }
 
     public function includeParse($includeFile,$preEnums,$preStructs,
-        $uniqueName,$moduleName,$namespaceName,
-        $servantName,$preNamespaceEnums,$preNamespaceStructs,$outputDir)
+                                 $uniqueName,$moduleName,$namespaceName,
+                                 $servantName,$preNamespaceEnums,$preNamespaceStructs,$outputDir)
     {
         $fp = fopen($includeFile, 'r');
         if (!$fp) {
