@@ -8,7 +8,7 @@ module testtafserviceservant
 
     struct OutStruct {
         0 require long id=0;
-        1 require int count=0;
+        1 require int count=0;// 这是一个struct
         2 require short page=0;
         3 optional string str;
     };
@@ -29,7 +29,8 @@ module testtafserviceservant
 
         string testStruct(long a, SimpleStruct b, out OutStruct d);
 
-        string testMap(short a, SimpleStruct b, map<string, string> m1, out OutStruct d, out map<int, SimpleStruct> m2);
+        string testMap(short a, SimpleStruct b, map<string, string> m1,
+        out OutStruct d, out map<int, SimpleStruct> m2);
 
         string testVector(int
         a, vector<string> v1,vector<SimpleStruct> v2, out vector<int> v3, out vector<OutStruct> v4);

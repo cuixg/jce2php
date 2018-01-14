@@ -2,7 +2,7 @@
     "name": "phptaf/jce2php",
     "description": "jce2php工具",
     "license":"MIT",
-    "version":"v1.0.3",
+    "version":"v1.0.4",
     "authors": [
         {
             "name": "Chen Liang",
