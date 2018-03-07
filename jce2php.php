@@ -973,6 +973,7 @@ class InterfaceParser {
     }
 
     public function isEnum($word) {
+        echo $word."\n";
         return in_array($word,$this->preEnums);
     }
 
@@ -1711,6 +1712,14 @@ class InterfaceParser {
             ];
             return $returnInfo;
         }
+        else if($this->isEnum($returnType)) {
+            $returnInfo = [
+                'type' => $returnType,
+                'wholeType' => $returnType,
+                'valueName' => $returnType
+            ];
+            return $returnInfo;
+        }
         else if( $this->isBasicType($returnType)) {
             $returnInfo = [
                 'type' => $returnType,
@@ -1995,7 +2004,6 @@ class InterfaceParser {
             'Vector' => 'getVector'
         ];
 
-
         if(isset($unpackMethods[strtolower($type)]))
             return $unpackMethods[strtolower($type)];
         else if($this->isEnum($type)) {
@@ -2192,8 +2200,6 @@ class InterfaceParser {
 
             $curTag++;
         }
-
-
 
         // 还要尝试去获取一下接口的返回码哦
         $returnUnpack = $this->getUnpackMethods($returnInfo['type']);
