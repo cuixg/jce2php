@@ -1,6 +1,8 @@
 # jce2php
 jce2php的工具
 
+packagelist地址: https://packagist.org/packages/phptaf/jce2php
+
 使用方式:
 php jce2php.php xx.jce "App.ServerName.ServantName"
 
